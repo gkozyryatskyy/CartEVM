@@ -51,5 +51,5 @@ tasks.register('benchmarkBesu', JavaExec) {
 tasks.register('benchmarkOps', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = 'com.hedera.cartevm.CartEVM'
-    args("--local", "--steps", "1", "--repeat", "1", "--gas-limit", "15000000", "--size-limit", "20480")
+    args("--local", "--steps", "1", "--repeat", "2", "--gas-limit", "15000000", "--size-limit", "20480")
 }

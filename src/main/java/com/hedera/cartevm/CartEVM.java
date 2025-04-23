@@ -50,7 +50,7 @@ public class CartEVM implements Runnable {
       names = {"--verbose"},
       paramLabel = "boolean",
       description = "Report on all runs, not just the last one")
-  private final Boolean verbose = true;
+  private final Boolean verbose = false;
 
   @CommandLine.Option(
       names = {"--gas-limit"},
@@ -90,7 +90,7 @@ public class CartEVM implements Runnable {
   @CommandLine.Option(
       names = {"--local"},
       description = "Execute in embedded EVM")
-  private final Boolean local = true;
+  private final Boolean local = false;
 
   @CommandLine.Option(
       names = {"--bytecode"},
