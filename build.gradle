@@ -21,7 +21,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.0.1-jre'
     implementation 'info.picocli:picocli:4.6.1'
     implementation 'org.hyperledger.besu:evm:23.10.0'
-    implementation 'org.hyperledger.besu:besu-datatypes:23.10.'
+    implementation 'org.hyperledger.besu:besu-datatypes:23.10.0'
     implementation 'io.tmio:tuweni-bytes:2.4.2'
     implementation 'io.tmio:tuweni-units:2.4.2'
 }
@@ -46,4 +46,10 @@ tasks.register('benchmarkBesu', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = 'com.hedera.cartevm.CartEVM'
     args("--local", "--steps", "1", "--repeat", "5", "--gas-limit", "30000000")
+}
+
+tasks.register('benchmarkOps', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.hedera.cartevm.CartEVM'
+    args("--local", "--steps", "1", "--repeat", "1", "--gas-limit", "15000000", "--size-limit", "20480")
 }
