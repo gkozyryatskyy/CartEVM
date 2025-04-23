@@ -362,7 +362,7 @@ public class Step {
     // not in petersburg
     steps.add(new Step("chainid", "", OP_POP, OP_CHAINID, 4));
     steps.add(new Step("selfbalance", "", OP_POP, OP_SELFBALANCE, 7));
-    steps.add(new Step("basefee", "", OP_POP, OP_BASEFEE, 4));
+//    steps.add(new Step("basefee", "", OP_POP, OP_BASEFEE, 4));
     steps.add(new Step("pop", push("42"), "", OP_POP, 5));
     steps.add(
         new Step("mload", push("43", "a0") + OP_MSTORE, "", push("a0"), OP_POP, OP_MLOAD, 8, 9));

@@ -26,7 +26,7 @@ public class ByteCodeOutput extends CodeGenerator {
   public void createBytecode(File outDir, String fileName) throws IOException {
     Path outputFile = outDir.toPath().resolve(fileName);
     System.out.println(outputFile);
-    String yulCode = generate(yulTemplate);
+    String yulCode = generate(yulTemplate).code();
     String bytecode = compileYul(yulCode);
     if (bytecode.length() > 0xffff) {
       throw new RuntimeException(

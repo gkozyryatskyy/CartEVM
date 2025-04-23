@@ -50,7 +50,7 @@ public class CartEVM implements Runnable {
       names = {"--verbose"},
       paramLabel = "boolean",
       description = "Report on all runs, not just the last one")
-  private final Boolean verbose = false;
+  private final Boolean verbose = true;
 
   @CommandLine.Option(
       names = {"--gas-limit"},
@@ -68,7 +68,7 @@ public class CartEVM implements Runnable {
       names = {"--steps"},
       paramLabel = "int",
       description = "Number of steps to combine per loop")
-  private final Integer steps = 2;
+  private final Integer steps = 1;
 
   @CommandLine.Option(
       names = {"--steps-resume"},
@@ -90,7 +90,7 @@ public class CartEVM implements Runnable {
   @CommandLine.Option(
       names = {"--local"},
       description = "Execute in embedded EVM")
-  private final Boolean local = false;
+  private final Boolean local = true;
 
   @CommandLine.Option(
       names = {"--bytecode"},
@@ -106,7 +106,7 @@ public class CartEVM implements Runnable {
       names = {"--steps-regexp"},
       paramLabel = "regexp",
       description = "RegExp of the steps to run")
-  private final String stepsRegExp = ".*";
+  private String stepsRegExp = ".*";
 
   public static void main(String[] args) {
     CartEVM cartevm = new CartEVM();

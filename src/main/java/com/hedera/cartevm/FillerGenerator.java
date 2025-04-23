@@ -111,6 +111,6 @@ public class FillerGenerator extends CodeGenerator {
     System.out.println(name);
     Path outputFile = outDir.toPath().resolve(name + "Filler.yml");
     System.out.println(outputFile);
-    Files.writeString(outputFile, generate(template));
+    Files.writeString(outputFile, generate(template).code());
   }
 }

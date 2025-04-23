@@ -58,7 +58,9 @@ public class CodeGenerator {
     return steps.stream().map(Step::getName).collect(Collectors.joining("__"));
   }
 
-  public String generate(String template) {
+  public record GeneratedCode(String code, long totalLoops) {}
+
+  public GeneratedCode generate(String template) {
     StringBuilder inner = new StringBuilder();
 
     List<Step> backwardsSteps = new ArrayList<>(steps);
@@ -122,13 +124,13 @@ public class CodeGenerator {
             .map(Step::getGlobalCleanupCode)
             .filter(s -> !s.isEmpty())
             .collect(Collectors.joining());
-    return template.formatted(
+    return new GeneratedCode(template.formatted(
         getName(),
         totalLoops,
         globalSetup.isEmpty() ? "" : "verbatim_0i_0o(hex\"" + globalSetup + "\")",
         inner.isEmpty() ? "" : "verbatim_0i_0o(hex\"" + inner + "\")",
         globalCleanup.isEmpty() ? "" : "verbatim_0i_0o(hex\"" + globalCleanup + "\")",
-        gasLimit);
+        gasLimit), totalLoops);
   }
 
   public String compileYul(String yulSource) {

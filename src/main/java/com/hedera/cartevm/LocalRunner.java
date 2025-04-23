@@ -54,8 +54,9 @@ import org.hyperledger.besu.evm.worldstate.WorldUpdater;
 
 public class LocalRunner extends CodeGenerator {
 
-  public static final String OUT_FORMAT = "%20s\t%s\t%,20d\t%,20d\t%,20.0f\t%s%n";
-  public static final String HEADER_OUT_FORMAT = "%20s\t%20s\t%20s\t%20s\t%20s\t%s".formatted("OP", "STATUS", "GAS", "TIME(ns)", "GAS per NS", "REVERT Reason");
+  public static final String OUT_FORMAT = "%20s\t%20s\t%,20d\t%,20d\t%,20.0f\t%,20d\t%,20d\t%s%n";
+  public static final String HEADER_OUT_FORMAT = "%20s\t%20s\t%20s\t%20s\t%20s\t%20s\t%20s\t%s"
+          .formatted("OP Name", "STATUS", "GAS", "TIME NS", "GAS per NS", "OPs", "NS per OP", "REVERT Reason");
   public static final String CUMULATIVE_OUT_FORMAT = "%20s\t%20s\t%,20d\t%,20d\t%,20.0f\t%n";
 
   static final Address SENDER = Address.fromHexString("12345678");
@@ -92,8 +93,8 @@ public class LocalRunner extends CodeGenerator {
   }
 
   public void execute(boolean verbose) {
-    String yul = generate(yulTemplate);
-    String bytecode = bytecodeCache.getUnchecked(yul);
+    GeneratedCode yul = generate(yulTemplate);
+    String bytecode = bytecodeCache.getUnchecked(yul.code());
     Bytes codeBytes = Bytes.fromHexString(bytecode);
 
     WorldUpdater worldUpdater = new SimpleWorld();
@@ -162,6 +163,8 @@ public class LocalRunner extends CodeGenerator {
           gasUsed,
           timeElapsedNanos,
           gasUsed * 1_000_000_000.0 / timeElapsedNanos,
+              yul.totalLoops(),
+          timeElapsedNanos / yul.totalLoops(),
           initialMessageFrame.getRevertReason().orElse(Bytes.EMPTY).toUnprefixedHexString());
     }
   }
