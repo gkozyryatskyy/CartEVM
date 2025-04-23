@@ -54,6 +54,10 @@ import org.hyperledger.besu.evm.worldstate.WorldUpdater;
 
 public class LocalRunner extends CodeGenerator {
 
+  public static final String OUT_FORMAT = "%20s\t%s\t%,20d\t%,20d\t%,20.0f\t%s%n";
+  public static final String HEADER_OUT_FORMAT = "%20s\t%20s\t%20s\t%20s\t%20s\t%s".formatted("OP", "STATUS", "GAS", "TIME(ns)", "GAS per NS", "REVERT Reason");
+  public static final String CUMULATIVE_OUT_FORMAT = "%20s\t%20s\t%,20d\t%,20d\t%,20.0f\t%n";
+
   static final Address SENDER = Address.fromHexString("12345678");
   static final Address RECEIVER = Address.fromHexString("9abcdef0");
   final LoadingCache<String, String> bytecodeCache =
@@ -149,14 +153,14 @@ public class LocalRunner extends CodeGenerator {
     cumulativeNanos += timeElapsedNanos;
     if (verbose) {
       System.out.printf(
-          "%s\t%s\t%,d\t%,.3f\t%,.0f\t%s%n",
+              OUT_FORMAT,
           getName().replace("__", "\t"),
           initialMessageFrame
               .getExceptionalHaltReason()
               .map(Object::toString)
               .orElse(initialMessageFrame.getState().toString()),
           gasUsed,
-          timeElapsedNanos / 1000.0,
+          timeElapsedNanos,
           gasUsed * 1_000_000_000.0 / timeElapsedNanos,
           initialMessageFrame.getRevertReason().orElse(Bytes.EMPTY).toUnprefixedHexString());
     }
@@ -167,12 +171,17 @@ public class LocalRunner extends CodeGenerator {
     cumulativeNanos = 0L;
   }
 
+  public static void reportHeader() {
+    System.out.println(HEADER_OUT_FORMAT);
+  }
+
   public static void reportCumulative() {
     System.out.printf(
-        "%s\t\t%,d\t%,.3f\t%,.0f\t%n",
-        "cumulative",
+            CUMULATIVE_OUT_FORMAT,
+        "CUMULATIVE",
+        "",
         cumulativeGas,
-        cumulativeNanos / 1000.0,
+        cumulativeNanos,
         cumulativeGas * 1_000_000_000.0 / cumulativeNanos);
   }
 }

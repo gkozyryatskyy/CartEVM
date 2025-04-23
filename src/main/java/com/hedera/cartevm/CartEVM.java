@@ -106,7 +106,7 @@ public class CartEVM implements Runnable {
       names = {"--steps-regexp"},
       paramLabel = "regexp",
       description = "RegExp of the steps to run")
-  private String stepsRegExp = ".*";
+  private final String stepsRegExp = ".*";
 
   public static void main(String[] args) {
     CartEVM cartevm = new CartEVM();
@@ -175,6 +175,7 @@ public class CartEVM implements Runnable {
     try {
       for (int i = repeat; i > 0; i--) {
         LocalRunner.resetCumulative();
+        LocalRunner.reportHeader();
         runCase(
             stepsPartial,
             Step.steps.stream().filter(s -> s.getName().matches(stepsRegExp)).toList(),
