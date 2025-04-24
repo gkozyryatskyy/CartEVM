@@ -54,6 +54,7 @@ import org.hyperledger.besu.evm.worldstate.WorldUpdater;
 
 public class LocalRunner extends CodeGenerator {
 
+  //TODO add actual opcode close to name
   public static final String OUT_FORMAT = "%20s\t%20s\t%,20d\t%,20d\t%,20.0f\t%,20d\t%,20d\t%s%n";
   public static final String HEADER_OUT_FORMAT = "%20s\t%20s\t%20s\t%20s\t%20s\t%20s\t%20s\t%s"
           .formatted("OP Name", "STATUS", "GAS", "TIME NS", "GAS^9 per NS", "OPs", "NS per OP", "REVERT Reason");
